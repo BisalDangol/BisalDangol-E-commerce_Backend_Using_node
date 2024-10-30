@@ -43,4 +43,4 @@ const userSchema = new mongoose.Schema({
 
 },{timestamps : true, versionKey:flase})
 
-mongoose.model('user',userSchema)
+module.exports = mongoose.model('user',userSchema)
