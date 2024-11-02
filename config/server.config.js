@@ -2,6 +2,6 @@
     sepecially for server
 */
 
-module.export={
+module.exports={
     PORT: 8080
 }
