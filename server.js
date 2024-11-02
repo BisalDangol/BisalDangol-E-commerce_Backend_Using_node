@@ -12,6 +12,8 @@ const bcryptjs = require("bcryptjs");
 // const http = require("http")
 // const { error } = require('console')
 
+app.use(express.json()); //middle ware of json and JS object
+
 /*creating the admin user in the project*/
 //connecting to the mongoDB
 mongoose.connect(db_config.DB_url);
@@ -29,7 +31,7 @@ try {
 /*creating the admin user in the project*/
 async function init() {
   try {
-    const admin = await userModule.findOne({ userID: "admin" });
+    const admin = await userModule.findOne({ userId: "admin" });
     if (admin) {
       console.log("Admin user is already created");
       return;
@@ -50,6 +52,11 @@ async function init() {
     console.log("Admin user is not created error: ", err);
   }
 }
+
+/**
+ * stich route to the server
+ */
+require("./router/auth.route")(app);
 
 /* server to begains*/
 
