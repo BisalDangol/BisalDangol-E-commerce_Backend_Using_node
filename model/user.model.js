@@ -1,6 +1,5 @@
 //loginpage for the project
-const mongoose = require("mongoose")
-
+const mongoose = require("mongoose");
 
 /**
  * user data schema making
@@ -11,36 +10,37 @@ const mongoose = require("mongoose")
  * usertype
  */
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     userId: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
-    name:{
-        type:String,
-        required: true
+    name: {
+      type: String,
+      required: true,
     },
-    email:{
-        type:String,
-        required:true,
-        lowercase:true,
-        minLength: 10,
-        unique:true
+    email: {
+      type: String,
+      required: true,
+      lowercase: true,
+      minLength: 10,
+      unique: true,
     },
-    password:{
-        type:String,
-        required:true,
-        minLength:8
+    password: {
+      type: String,
+      required: true,
+      minLength: 8,
     },
-    userType:{
-        type:String,
-        required:true,
-        default: "user",
-        enum:["admin","user"]
-    }
+    userType: {
+      type: String,
+      required: true,
+      default: "user",
+      enum: ["admin", "user"],
+    },
+  },
+  { timestamps: true, versionKey: false }
+);
 
-
-},{timestamps : true, versionKey:false})
-
-module.exports = mongoose.model('user',userSchema)
+module.exports = mongoose.model("user", userSchema);

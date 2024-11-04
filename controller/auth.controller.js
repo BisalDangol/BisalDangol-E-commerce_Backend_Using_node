@@ -22,11 +22,17 @@ exports.signup = async (req, res) => {
 
   try {
     const userCreate = await userModule.create(userObj);
+    const obj_ret = {
+      name: userCreate.name,
+      userId: userCreate.userId,
+      email: userCreate.email,
+      userType: userCreate.userType,
+    };
     res.status(201).send(userCreate);
   } catch (err) {
     console.log("error found: ", err);
     res.status(500).send({
-      message: err.message
+      message: err.message,
     });
   }
   //3. return back the responce to the user
