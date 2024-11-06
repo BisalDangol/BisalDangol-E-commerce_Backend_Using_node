@@ -1,8 +1,9 @@
 /**
  * validating the user data in signup
  */
+const user_module = require("../model/user.model");
 
-const verifyUserSignUpBody = (req, res, next) => {
+const verifyUserSignUpBody = async (req, res, next) => {
   try {
     //user name varifying
     if (!req.body.name) {
@@ -13,14 +14,24 @@ const verifyUserSignUpBody = (req, res, next) => {
       return res.status(400).json({ message: "Email is required" });
     }
     //user  userid varifying
-    if (!res.body.userId){
-        return res.status(400).json({message:"userId is required"})
+    if (!req.body.userId) {
+      return res.status(400).json({ message: "userId is required" });
     }
     //userid is already or not
+    const user = await user_module.findOne({ userId: req.body.userId });
+
+    if (user) {
+      return res.status(400).json({ message: "userId is already exist" });
+    }
+    next();
   } catch (error) {
     console.log("something wents wrong");
     res.status(500).send({
       message: "Internal Server Error",
     });
   }
+};
+
+module.exports = {
+  VerifyUserSignUpBody: verifyUserSignUpBody,
 };
