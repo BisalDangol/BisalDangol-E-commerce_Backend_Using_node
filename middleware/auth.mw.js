@@ -27,7 +27,7 @@ const verifyUserSignUpBody = async (req, res, next) => {
   } catch (error) {
     console.log("something wents wrong");
     res.status(500).send({
-      message: "Internal Server Error",
+      message: "Internal Server Error: 500",
     });
   }
 };

@@ -3,6 +3,8 @@
  */
 const bcryptjs = require("bcryptjs");
 const userModule = require("../model/user.model");
+const jwt = require("jsonwebtoken");
+const jwtEncriptKey = require("../config/auth.config");
 
 exports.signup = async (req, res) => {
   /**
@@ -36,4 +38,27 @@ exports.signup = async (req, res) => {
     });
   }
   //3. return back the responce to the user
+};
+
+exports.signin = async (req, res) => {
+  //check the user id is present in the database or not
+  await userModule.findOne({ userId: req.body.userId });
+
+  if (user == null) {
+    return (res.status(400).senf = d({
+      message: "user not found",
+    }));
+  }
+  //check the username and password and verify the password
+  const isPasswordVali = bcrypt.compareSync(req.body.password, user.password);
+
+  if (!isPasswordVali) {
+    return res.status(401).send({
+      message: "invalid password",
+    });
+  }
+  //jwd token will be generate to acess the login
+  const token = jwt.sign({ id: user.userId }, jwtEncriptKey.token, {
+    expiresIn: 120,
+  });
 };
