@@ -33,6 +33,30 @@ const verifyUserSignUpBody = async (req, res, next) => {
   }
 };
 
+const verifyUserSignin = async (req, res, next) => {
+  try {
+    //userid given or not checking
+    if (!req.body.userId) {
+      res.status(400).send({
+        message: "userId is not provided",
+      });
+    }
+    //userpassword is given of not checking
+    if (!req.body.password) {
+      res.status(400).send({
+        message: "password is not provided",
+      });
+    }
+    next();
+  } catch (err) {
+    console.log("something wents wrong:", err);
+    res.status(500).send({
+      message: "Internal Server Error: 500",
+    });
+  }
+};
+
 module.exports = {
-  verifyUser: verifyUserSignUpBody,
+  verifyUserSignup: verifyUserSignUpBody,
+  verifyUserSignin: verifyUserSignin,
 };
