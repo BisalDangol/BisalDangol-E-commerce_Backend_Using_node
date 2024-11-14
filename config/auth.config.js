@@ -2,6 +2,6 @@
  * jwt tokwn secret key
  */
 
-module.exports = () => {
-  token: letsHash;
+module.exports = {
+  token: "my_jwt_secret_key",
 };

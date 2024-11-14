@@ -4,7 +4,7 @@
 const bcryptjs = require("bcryptjs");
 const userModule = require("../model/user.model");
 const jwt = require("jsonwebtoken");
-const jwtEncriptKey = require("../config/auth.config");
+const secret = require("../config/auth.config");
 
 exports.signup = async (req, res) => {
   /**
@@ -42,23 +42,44 @@ exports.signup = async (req, res) => {
 
 exports.signin = async (req, res) => {
   //check the user id is present in the database or not
-  await userModule.findOne({ userId: req.body.userId });
+  const user = await userModule.findOne({ userId: req.body.userId });
 
   if (user == null) {
-    return (res.status(400).senf = d({
+    return (res.status(400).send = {
       message: "user not found",
-    }));
+    });
   }
   //check the username and password and verify the password
-  const isPasswordVali = bcrypt.compareSync(req.body.password, user.password);
+  const isPasswordVali = bcryptjs.compareSync(req.body.password, user.password);
 
   if (!isPasswordVali) {
     return res.status(401).send({
       message: "invalid password",
     });
   }
+
+  // Check if the token secret is defined
+  if (!secret.token) {
+    console.error("JWT secret token is missing.");
+    return res.status(500).send({ message: "Internal server error" });
+  }
+
   //jwd token will be generate to acess the login
-  const token = jwt.sign({ id: user.userId }, jwtEncriptKey.token, {
-    expiresIn: 120,
-  });
+  try {
+    const token = jwt.sign({ id: user.userId }, secret.token, {
+      expiresIn: 120,
+    });
+    res.status(200).send({
+      name: user.name,
+      userId: user.userId,
+      email: user.email,
+      userType: user.userType,
+      ascesstoken: token,
+    });
+  } catch (err) {
+    console.log("error found: ", err);
+    res.status(500).send({
+      message: err.message,
+    });
+  }
 };
