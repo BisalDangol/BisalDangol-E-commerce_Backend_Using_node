@@ -17,10 +17,16 @@ const catogory = new mongoose.Schema(
     },
     description: {
       type: String,
+      minLength: 10,
+      maxLength: 50,
+    },
+    price: {
+      type: Number,
       required: true,
-      min,
+      min: 10,
     },
   },
   { timestamps: true, versionKey: false }
 );
 
+module.exports = mongoose.model("catagory", catagorySchema);
