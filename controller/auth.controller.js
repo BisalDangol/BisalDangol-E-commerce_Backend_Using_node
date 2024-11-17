@@ -55,7 +55,7 @@ exports.signin = async (req, res) => {
   if (!isPasswordVali) {
     return res.status(401).send({
       message: "invalid password",
-    });
+    }); 
   }
 
   // Check if the token secret is defined
