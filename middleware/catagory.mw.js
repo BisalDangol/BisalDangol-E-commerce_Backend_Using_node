@@ -25,7 +25,8 @@ const validateCatagory = async (req, res, next) => {
       description,
       price,
     });
-    res.status(201).json({ message: "catagory created successfully" });
+    res.status(201).json({ message: "catagory created successfully " });
+    console.log("catagory created successfully of ");
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
