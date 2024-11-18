@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
  *
  */
 
-const catogory = new mongoose.Schema(
+const catagorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
