@@ -57,7 +57,7 @@ async function init() {
  * stich route to the server
  */
 require("./router/auth.route")(app);
-require("./router/catagory.routs")(app);
+require("./router/catagory.route")(app);
 
 /* server to begains*/
 

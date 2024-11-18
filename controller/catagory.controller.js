@@ -22,15 +22,15 @@ exports.createNewCatagory = async (req, res) => {
   };
   try {
     //inseart in the mongoDB
-    const catagData = await catagoryModel.crate(catagoryData);
+    const catagData = await catagoryModel.create(catagoryData);
     return res.status(201).send({
       message: "catagory created successfully",
     });
   } catch (errr) {
+    //return the res of the created catogory
     console.log(errr);
     return res.status(500).send({
       message: "Error: catagory not created",
     });
   }
-  //return the res of the created catogory
 };
